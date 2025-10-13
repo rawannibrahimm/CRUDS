@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Management System CRUDS </title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap" rel="stylesheet">   
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./CSS/all.min.css" />
+    <!-- Bootstrap ToolKit -->
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css" />
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="./CSS/style.css" />
+</head>
+<body>
+    <header class="text-center bg-primary pt-3 pb-1 text-white shadow-sm">
+        <h2 class="fs-1 mb-0">Store Management System</h2>
+        <p>Efficiently manage your product iventory</p>
+    </header>
+
+    <main>
+        <section class="product-form py-5">
+            <div class="container shadow pb-4">
+                <div class="box-title py-4 d-flex gap-2 align-items-center text-primary border-bottom border-3">
+                    <i class="fa-solid fa-circle-plus fs-4"></i>
+                    <h3 class="mb-0 fs-2">Add New Product</h3>
+                </div>
+                <form class="pt-3">
+                    <div class="row">
+                        <div class="col-md-6 px-4">
+                            <div class="form-floating mb-3">
+                                <input oninput="validateInput(this , 'nameMsg')" type="text" class="form-control py-4 pt-5 border-bottom border-2 border-primary rounded-0" name="productName" id="productName" placeholder="Product Name">
+                                <label for="productName d-flex gap-3 align-items-center">
+                                    <i class="fas fa-tag"></i>
+                                    Product Name
+                                </label>
+                                <p id="nameMsg" class="alert alert-danger d-none">Name must be at least 3 characters long.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-4">
+                            <div class="form-floating mb-3">
+                                <input oninput="validateInput(this , 'priceMsg')" type="number" class="form-control py-4 pt-5 border-bottom border-2 border-primary rounded-0" name="productPrice" id="productPrice" placeholder="Product Price">
+                                <label for="productPrice d-flex gap-3 align-items-center">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    Product Price
+                                </label>
+                                <p id="priceMsg" class="alert alert-danger d-none">Price must have numeric characters starting from 1000.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-4">
+                            <div class="form-floating mb-3">
+                                <input oninput="validateInput(this , 'categoryMsg')" list="categories" class="form-control py-4 pt-5 border-bottom border-2 border-primary rounded-0" name="productCategory" id="productCategory" placeholder="Product Category">
+                                <datalist id="categories">
+                                    <option value="Mobile">
+                                    <option value="Laptop">
+                                    <option value="TV">
+                                </datalist>
+                                <label for="productCategory d-flex gap-3 align-items-center">
+                                    <i class="fa-solid fa-table-cells-large"></i>
+                                    Product Category
+                                </label>
+                                <p id="categoryMsg" class="alert alert-danger d-none">Category is mobile, laptop or TV only.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-4">
+                            <div class="form-floating mb-3 d-flex">
+                                <input oninput="validateInput(this , 'imageMsg')" onchange="previewImage()" type="file" class="form-control py-4 pt-5 border-bottom border-2 border-primary rounded-0" name="productImage" id="productImage" placeholder="Product Image">
+                                <label for="productimg d-flex gap-3 align-items-center">
+                                    <i class="fas fa-image"></i>
+                                    Product Image
+                                </label>
+                                <p id="imageMsg" class="alert alert-danger d-none">Please upload files with .jpeg/.jpg/.png/.webp extensions only.</p>
+                                <img id="preview" src="imgs/iphone16.jpg" alt="Image Preview" class="perview d-none">
+                            </div>
+                        </div>
+                        <div class="col-md-12 px-4">
+                            <div class="form-floating mb-3">
+                                <input oninput="validateInput(this , 'descriptionMsg')" type="text" class="form-control py-4 pt-5 border-bottom border-2 border-primary rounded-0" name="productDescription" id="productDescription" placeholder="Product Description">
+                                <label for="productDescription d-flex gap-3 align-items-center">
+                                    <i class="fa-solid fa-rectangle-list"></i>
+                                    Product Description
+                                </label>
+                                <p id="descriptionMsg" class="alert alert-danger w-50 d-none">Description accepts any character long.</p>
+                            </div>
+                        </div>
+                        <div class="px-4 d-flex justify-content-between align-items-center pt-4">
+                            <button id="addBtn" onclick="addProduct()" type="button" class="btn btn-primary fw-bolder px-3">
+                                <i class="fa-solid fa-plus"></i>
+                                Add Product
+                            </button>
+                            <button id="updateBtn" onclick="updateProduct()" type="button" class="btn btn-warning text-white fw-bolder px-3 d-none">
+                                <i class="fas fa-file-edit"></i>
+                                Update Product
+                            </button>
+                            <input oninput="searchProduct()" id="searchedItem" class="form-control w-50 border border-black border-3 border-opacity-50" type="search" placeholder="Search Product By Name" aria-label="Search">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="shown-products pb-5">
+            <div class="container">
+                <div class="py-4 d-flex justify-content-between align-items-center  ">
+                    <div class="box-title d-flex gap-2 align-items-center text-dark ">
+                        <i class="fa-solid fa-border-all fs-4"></i>
+                        <h3 class="mb-0 fs-2">Product Inventory</h3>
+                    </div>
+                    <button type="button" class="btn btn-primary counter-badge">
+                        <span id="productsNumber"> </span> Products
+                    </button>
+                </div>
+                <div id="rowData" class="row gy-5">
+                
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <script src="JS/main1.js"></script>
+</body>
+</html>

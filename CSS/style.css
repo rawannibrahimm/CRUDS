@@ -1,0 +1,54 @@
+
+h1, h2, h3, h4, h5, h6{
+    font-family: "Passion One", sans-serif;
+}
+
+header h2{
+    letter-spacing: 0.2rem;
+}
+
+header p{
+    letter-spacing: 0.15rem;
+    color: #eee;
+}
+
+.form-control{
+    border: unset;
+}
+
+.form-control:focus {
+    border: unset;
+    box-shadow: none;
+}
+
+.perview {
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    right: 10px;
+}
+
+.counter-badge {
+    font-size: 12px;
+    padding-block: 5px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+
+.form-control.is-invalid {
+    margin-bottom: 3px;
+}
+
+.form-control.is-invalid:focus {
+    border-bottom-color: red !important;
+    box-shadow: unset;
+}
+
+.form-control.is-valid {
+    margin-bottom: 3px;
+}
+
+.form-control.is-valid:focus {
+    border-bottom-color: green !important;
+    box-shadow: unset;
+}
